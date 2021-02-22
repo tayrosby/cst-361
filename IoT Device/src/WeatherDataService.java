@@ -2,7 +2,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
@@ -17,7 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
+import java.util.Scanner;
 /**
  * 
  * @author Victoria Fai and Taylor Rosby
@@ -86,7 +88,7 @@ public class WeatherDataService {
 			
 			System.out.println(weather.toString());
 			//calls the post method to send to the web applciation
-			//sendApiData(weather);
+			post(weather);
 
 		}
 
@@ -99,14 +101,15 @@ public class WeatherDataService {
 	 * @param weather weather stands for the weather information found from the weather api site 
 	 * @throws Exception exception in case a problem occurs.
 	 */
-	public void sendApiData(WeatherModel weather) throws Exception {
+	private void post(WeatherModel weather) throws Exception {
 		//takes the weather model and changes it to json
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json = objectMapper.writeValueAsString(weather);
 
-		System.out.println(json);
+		System.out.println("in the post method" +json);
 		//url of the web application
-		String webAppURL = "";
+		String webAppURL = "http://localhost:8080/reporting-application/rest/weather/addweatherJ";
+		
 
 		try {
 			

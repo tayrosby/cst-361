@@ -13,6 +13,7 @@ import java.sql.Connection;
 
 import beans.Credentials;
 import beans.UserModel;
+import beans.WeatherDataModel;
 
 @Stateless
 @Local(DataAccessInterface.class)
@@ -38,7 +39,7 @@ public class UserDataManager implements DataAccessInterface {
 		
 		Connection conn = null;
 		
-		String url = "jdbc:mysql://localhost:8080/weather-reporting";
+		String url = "jdbc:mysql://localhost:8889/mydb";
 		String username = "root";
 		String password = "root";
 		
@@ -89,7 +90,7 @@ public class UserDataManager implements DataAccessInterface {
 		
 		Connection conn = null;
 		
-		String url = "jdbc:mysql://localhost:8080/weather-reporting";
+		String url = "jdbc:mysql://localhost:8889/mydb";
 		String username = "root";
 		String password = "root";
 		
@@ -122,5 +123,11 @@ public class UserDataManager implements DataAccessInterface {
 					}
 			return users;
 			}
+
+	@Override
+	public int create(WeatherDataModel model) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

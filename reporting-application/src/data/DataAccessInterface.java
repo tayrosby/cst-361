@@ -2,6 +2,7 @@ package data;
 
 import beans.Credentials;
 import beans.UserModel;
+import beans.WeatherDataModel;
 
 public interface DataAccessInterface {
 	
@@ -18,5 +19,5 @@ public interface DataAccessInterface {
 	 * @return - user info
 	 */
 	UserModel createUser(UserModel user);
-
+	int create(WeatherDataModel model);
 }

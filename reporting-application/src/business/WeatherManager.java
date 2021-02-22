@@ -3,6 +3,10 @@ package business;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.Local;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
@@ -10,10 +14,13 @@ import org.primefaces.model.chart.LineChartSeries;
 
 import beans.ChartModel;
 import beans.WeatherDataModel;
-
+import data.WeatherDataManger;
+@Stateless
+@Local(WeatherManagerInterface.class)
+@LocalBean
 public class WeatherManager implements WeatherManagerInterface {
 	
-	
+	private WeatherDataManger service = new WeatherDataManger();
 	private List<WeatherDataModel> weatherList = new ArrayList<WeatherDataModel>();
 
 	/**
@@ -22,6 +29,7 @@ public class WeatherManager implements WeatherManagerInterface {
 	 */
 	@Override
 	public List<WeatherDataModel> getAllWeather() {
+		this.weatherList = service.findAllWeather();
 		return this.weatherList;
 	}
 	
@@ -42,14 +50,14 @@ public class WeatherManager implements WeatherManagerInterface {
 	{
 		//Create an instance of a WeatherData List
 		List<WeatherDataModel> data = new ArrayList<WeatherDataModel>();
-		
+		data = getAllWeather();
 		
 		//Populate The Line Graph
 		LineChartSeries series = new LineChartSeries();
 		series.setLabel("Temp");
 		for(WeatherDataModel weather : data)
 		{
-			series.set(weather.getTemp(), weather.getFeelsLike());
+			series.set(weather.getTemp(), weather.getFeels_like());
 		}
 		
 		model.getModel().addSeries(series);
@@ -63,6 +71,12 @@ public class WeatherManager implements WeatherManagerInterface {
         yAxis.setMax(500);
 		
         return model;
+	}
+
+	@Override
+	public int addWeather(WeatherDataModel model) {
+		int result = service.create(model);
+		return result;
 	}
 
 }

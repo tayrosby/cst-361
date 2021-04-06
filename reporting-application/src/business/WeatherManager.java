@@ -3,9 +3,11 @@ package business;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -14,13 +16,18 @@ import org.primefaces.model.chart.LineChartSeries;
 
 import beans.ChartModel;
 import beans.WeatherDataModel;
-import data.WeatherDataManger;
+import data.WeatherDataManager;
+import util.LoggingInterceptor;
+
+@Interceptors(LoggingInterceptor.class)
 @Stateless
 @Local(WeatherManagerInterface.class)
 @LocalBean
 public class WeatherManager implements WeatherManagerInterface {
 	
-	private WeatherDataManger service = new WeatherDataManger();
+	@EJB
+	WeatherDataManager service;
+	
 	private List<WeatherDataModel> weatherList = new ArrayList<WeatherDataModel>();
 
 	/**
@@ -57,7 +64,7 @@ public class WeatherManager implements WeatherManagerInterface {
 		series.setLabel("Temp");
 		for(WeatherDataModel weather : data)
 		{
-			series.set(weather.getTemp(), weather.getFeels_like());
+			series.set(weather.getTemp(), weather.getFeelsLike());
 		}
 		
 		model.getModel().addSeries(series);
@@ -78,5 +85,4 @@ public class WeatherManager implements WeatherManagerInterface {
 		int result = service.create(model);
 		return result;
 	}
-
 }

@@ -1,21 +1,28 @@
 package controllers;
 
+import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.ejb.EJB;
+import javax.faces.view.ViewScoped ;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
+import javax.interceptor.Interceptors;
 
 import beans.ChartModel;
 import beans.WeatherDataModel;
-import business.WeatherManager;
+import business.WeatherManagerInterface;
+import util.LoggingInterceptor;
 
-@ManagedBean
+@Interceptors(LoggingInterceptor.class) 
+@Named
 @ViewScoped
-public class WeatherController 
-{
-	//instance of weather novels
-	public WeatherManager manager = new WeatherManager();
+public class WeatherController  implements Serializable {
+	
+	@EJB
+	WeatherManagerInterface manager;
+	
+	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * displays the tabular chart

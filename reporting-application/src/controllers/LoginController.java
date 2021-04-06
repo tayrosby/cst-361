@@ -1,19 +1,27 @@
 package controllers;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import java.io.Serializable;
+
+import javax.ejb.EJB;
+import javax.faces.view.ViewScoped ;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
+import javax.interceptor.Interceptors;
 
 import beans.Credentials;
 import beans.UserModel;
-import business.LoginManager;
+import business.LoginManagerInterface;
+import util.LoggingInterceptor;
 
-@ManagedBean
+@Interceptors(LoggingInterceptor.class) 
+@Named
 @ViewScoped
-public class LoginController {
-
-	//instance of login manager
-	LoginManager manager = new LoginManager();
+public class LoginController implements Serializable {
+	
+	@EJB
+	LoginManagerInterface manager;
+	
+	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * takes in creds

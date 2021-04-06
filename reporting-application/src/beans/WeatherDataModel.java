@@ -1,31 +1,23 @@
 package beans;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-
-@ManagedBean
-@ViewScoped
 public class WeatherDataModel {
 
 	//weather attributes
 	float temp;
-	float feels_like;
-	float temp_min;
-	float temp_max;
+	float feelsLike;
+	float min;
+	float max;
 	float pressure;
 	float humidity;
-	
-	
 	
 	/**
 	 * constructor
 	 */
 	public WeatherDataModel() {
-		super();
 		this.temp = 0;
-		this.feels_like = 0;
-		this.temp_min = 0;
-		this.temp_max = 0;
+		this.feelsLike = 0;
+		this.min = 0;
+		this.max = 0;
 		this.pressure = 0;
 		this.humidity = 0;
 	}
@@ -39,12 +31,12 @@ public class WeatherDataModel {
 	 * @param pressure
 	 * @param humidity
 	 */
-	public WeatherDataModel(float temp, float feels_like, float temp_min, float temp_max, float pressure, float humidity) {
+	public WeatherDataModel(float temp, float feelsLike, float min, float max, float pressure, float humidity) {
 		super();
 		this.temp = temp;
-		this.feels_like = feels_like;
-		this.temp_min = temp_min;
-		this.temp_max = temp_max;
+		this.feelsLike = feelsLike;
+		this.min = min;
+		this.max = max;
 		this.pressure = pressure;
 		this.humidity = humidity;
 	}
@@ -58,28 +50,28 @@ public class WeatherDataModel {
 		this.temp = temp;
 	}
 
-	public float getFeels_like() {
-		return feels_like;
+	public float getFeelsLike() {
+		return feelsLike;
 	}
 
-	public void setFeels_like(float feels_like) {
-		this.feels_like = feels_like;
+	public void setFeelsLike(float feelsLike) {
+		this.feelsLike = feelsLike;
 	}
 
-	public float getTemp_min() {
-		return temp_min;
+	public float getMin() {
+		return min;
 	}
 
-	public void setTemp_min(float temp_min) {
-		this.temp_min = temp_min;
+	public void setMin(float min) {
+		this.min = min;
 	}
 
-	public float getTemp_max() {
-		return temp_max;
+	public float getMax() {
+		return max;
 	}
 
-	public void setTemp_max(float temp_max) {
-		this.temp_max = temp_max;
+	public void setMax(float max) {
+		this.max = max;
 	}
 
 	public float getPressure() {
@@ -96,12 +88,6 @@ public class WeatherDataModel {
 
 	public void setHumidity(float humidity) {
 		this.humidity = humidity;
-	}
-
-	@Override
-	public String toString() {
-		return "WeatherDataModel [temp=" + temp + ", feels_like=" + feels_like + ", temp_min=" + temp_min
-				+ ", temp_max=" + temp_max + ", pressure=" + pressure + ", humidity=" + humidity + "]";
 	}
 	
 	

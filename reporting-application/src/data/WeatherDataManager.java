@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -16,10 +17,13 @@ import java.sql.Connection;
 import beans.Credentials;
 import beans.UserModel;
 import beans.WeatherDataModel;
+import util.LoggingInterceptor;
+
+@Interceptors(LoggingInterceptor.class)
 @Stateless
 @Local(DataAccessInterface.class)
 @LocalBean
-public class WeatherDataManger implements DataAccessInterface{
+public class WeatherDataManager implements DataAccessInterface{
 	/**
 	 * findallweather method used to get all the weatherdatamodels in the database
 	 * @return a list of weatherdatamodels is return
@@ -89,7 +93,7 @@ public class WeatherDataManger implements DataAccessInterface{
 			
 			//sql query to add a weatherdata model from the iot device
 			String sql = "INSERT INTO `iot`(`TEMP`, `FEELS_LIKE`, `TEMP_MIN`, `TEMP_MAX`, `PRESSURE`, `HUMIDITY`) VALUES ('" + weather.getTemp() + 
-					"','" + weather.getFeels_like() + "','" + weather.getTemp_min() + "','" + weather.getTemp_max() + "','" + weather.getPressure() + "','" + weather.getHumidity() + "')"; 
+					"','" + weather.getFeelsLike() + "','" + weather.getMin() + "','" + weather.getMax() + "','" + weather.getPressure() + "','" + weather.getHumidity() + "')"; 
 			
 			Statement stmt = conn.createStatement();
 

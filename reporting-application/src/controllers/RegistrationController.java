@@ -1,17 +1,26 @@
 package controllers;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import java.io.Serializable;
+
+import javax.ejb.EJB;
+import javax.faces.view.ViewScoped ;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
+import javax.interceptor.Interceptors;
 
 import beans.UserModel;
-import business.RegistrationManager;
+import business.RegistrationManagerInterface;
+import util.LoggingInterceptor;
 
-@ManagedBean
+@Interceptors(LoggingInterceptor.class) 
+@Named
 @ViewScoped
-public class RegistrationController {
-
-RegistrationManager manager = new RegistrationManager();
+public class RegistrationController implements Serializable {
+	
+	@EJB
+	RegistrationManagerInterface manager;
+	
+	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * registers a user

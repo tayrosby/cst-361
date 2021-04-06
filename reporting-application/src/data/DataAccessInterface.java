@@ -1,5 +1,7 @@
 package data;
 
+import java.util.List;
+
 import beans.Credentials;
 import beans.UserModel;
 import beans.WeatherDataModel;
@@ -19,5 +21,18 @@ public interface DataAccessInterface {
 	 * @return - user info
 	 */
 	UserModel createUser(UserModel user);
+	
+	/**
+	 * creates a weather model
+	 * @param model
+	 * @return - weather model
+	 */
 	int create(WeatherDataModel model);
+
+	/**
+	 * finds all weather data
+	 * @return - list of weather data
+	 */
+	List<WeatherDataModel> findAllWeather();
+
 }

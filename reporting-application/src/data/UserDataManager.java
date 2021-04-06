@@ -7,14 +7,18 @@ import java.sql.SQLException;
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 import java.sql.Statement;
+import java.util.List;
 import java.sql.Connection;
 
 import beans.Credentials;
 import beans.UserModel;
 import beans.WeatherDataModel;
+import util.LoggingInterceptor;
 
+@Interceptors(LoggingInterceptor.class)
 @Stateless
 @Local(DataAccessInterface.class)
 @LocalBean
@@ -39,7 +43,7 @@ public class UserDataManager implements DataAccessInterface {
 		
 		Connection conn = null;
 		
-		String url = "jdbc:mysql://localhost:8889/mydb";
+		String url = "jdbc:mysql://localhost:8080/weather-reporting";
 		String username = "root";
 		String password = "root";
 		
@@ -90,7 +94,7 @@ public class UserDataManager implements DataAccessInterface {
 		
 		Connection conn = null;
 		
-		String url = "jdbc:mysql://localhost:8889/mydb";
+		String url = "jdbc:mysql://localhost:8080/weather-reporting";
 		String username = "root";
 		String password = "root";
 		
@@ -128,6 +132,12 @@ public class UserDataManager implements DataAccessInterface {
 	public int create(WeatherDataModel model) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<WeatherDataModel> findAllWeather() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,19 +1,23 @@
 package business;
 
+import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 import beans.UserModel;
 import data.UserDataManager;
+import util.LoggingInterceptor;
 
+@Interceptors(LoggingInterceptor.class)
 @Stateless
 @Local(RegistrationManagerInterface.class)
 @LocalBean
 public class RegistrationManager implements RegistrationManagerInterface {
-
-	//instance of data manager
-UserDataManager DAO = new UserDataManager();
+	
+	@EJB
+	UserDataManager DAO;
 	
 	/**
 	 * constructor

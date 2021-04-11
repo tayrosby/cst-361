@@ -46,6 +46,11 @@ public class WeatherDataService {
 			//sets the request to a get and make it be returned as json
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Accept", "application/json");
+			
+			if (connection.getResponseCode() != 200) {
+				throw new RuntimeException("Failed : HTTP Error code : " + connection.getResponseCode());
+			}
+			
 			//makes the reader
 			InputStreamReader inputReader = new InputStreamReader(connection.getInputStream());
 			BufferedReader bufferReader = new BufferedReader(inputReader);
@@ -94,6 +99,7 @@ public class WeatherDataService {
 
 		catch (Exception e) {
 			e.printStackTrace();
+			throw new DatabaseException(e);
 		}
 	}
 	/**
@@ -120,12 +126,18 @@ public class WeatherDataService {
 			//makes the call
 			Call call = client.newCall(request);
 			Response response = call.execute();
-			System.out.println("Response code: " + response.code());
+			
+			if(response.code() != 200) {
+				System.out.println("Error occured while sending weather: code " + response.code());
+			}
+			else
+				System.out.println("Response code: " + response.code());
 			//closes the response
 			response.close();
 
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			throw new DatabaseException(e);
 		}
 	}
 }

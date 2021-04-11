@@ -1,6 +1,7 @@
 package data;
 
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -16,6 +17,7 @@ import java.sql.Connection;
 import beans.Credentials;
 import beans.UserModel;
 import beans.WeatherDataModel;
+import util.DatabaseException;
 import util.LoggingInterceptor;
 
 @Interceptors(LoggingInterceptor.class)
@@ -36,51 +38,59 @@ public class UserDataManager implements DataAccessInterface {
 	 * returns the user model
 	 */
 	@Override
-	public UserModel findUserByCreds(Credentials creds) {
+	public boolean findUserByCreds(Credentials creds) {
 		
 		String email = creds.getEmail();
 		String pword = creds.getPassword();
+		Boolean result = false;
 		
 		Connection conn = null;
 		
-		String url = "jdbc:mysql://localhost:8080/weather-reporting";
+		String url = "jdbc:mysql://localhost:8889/mydb";
 		String username = "root";
 		String password = "root";
 		
-		String sql = "SELECT * FROM `users` WHERE `email` = '" + email + "' AND `password` = '" + pword + "'";
-		UserModel user = new UserModel();
+		String sql = "SELECT * FROM `user` WHERE `email` = ? AND `password` = ? ";
+		
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				try {
 					conn = DriverManager.getConnection(url, username, password);
 				} catch (SQLException s) {
 					s.printStackTrace();
+					throw new DatabaseException(s);
 				}
 				
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
+				PreparedStatement ps = conn.prepareStatement(sql);
+				
+				ps.setObject(1, creds.getEmail());
+				ps.setObject(2, creds.getPassword());
+				
+				ResultSet rs = ps.executeQuery();
+				
 				while(rs.next()) {
-					user.setFirstName(rs.getString("firstName"));
-					user.setLastName(rs.getString("lastName"));
-					user.setCreds(new Credentials(rs.getString("email"), rs.getString("password")));
+					result = true;
 				}
 				
 				rs.close();
 				
 			} catch (Exception e) {
 				e.printStackTrace();
+				throw new DatabaseException(e);
 			} finally {
 				if(conn != null) {
 					try {
 						conn.close();
+						return result;
 					} catch (SQLException e) {
 						e.printStackTrace();
+						throw new DatabaseException(e);
 					}
 				}
 					
 			}
 			
-			return user;
+			return result;
 	}
 
 	/**
@@ -88,44 +98,47 @@ public class UserDataManager implements DataAccessInterface {
 	 * returns the user model
 	 */
 	@Override
-	public UserModel createUser(UserModel user) {
+	public boolean createUser(UserModel user) {
 		
 		Credentials creds = user.getCreds();
 		
 		Connection conn = null;
 		
-		String url = "jdbc:mysql://localhost:8080/weather-reporting";
+		String url = "jdbc:mysql://localhost:8889/mydb";
 		String username = "root";
 		String password = "root";
 		
-		String sql = "INSERT INTO `users` (`firstName`, `lastname`, `email`, `password`) VALUES ('" + user.getFirstName() + 
-				"','" + user.getLastName() + "','" + creds.getEmail() + "','" + creds.getPassword() + "')";
-	
-		UserModel users = new UserModel();
-		
+		String sql = "INSERT INTO user (firstName, lastName, email, password) VALUES (?,?,?,?)";  
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 				try {
 					conn = DriverManager.getConnection(url, username, password);
 					} catch (SQLException s) {
-						
 						s.printStackTrace();
+						throw new DatabaseException(s);
 					}
-				
-					Statement stmt = conn.createStatement();
-					stmt.executeUpdate(sql);
+					PreparedStatement ps = conn.prepareStatement(sql);
+					ps.setObject(1, user.getFirstName());
+					ps.setObject(2, user.getLastName());
+					ps.setObject(3, user.getCreds().getEmail());
+					ps.setObject(4, user.getCreds().getPassword());
+					//Statement stmt = conn.createStatement();
+					ps.executeUpdate();
 					} catch (Exception e) {
 						e.printStackTrace();
+						throw new DatabaseException(e);
 					} finally {
 						if(conn != null) {
 							try {
 								conn.close();
+								return true;
 							} catch (SQLException s) {
 								s.printStackTrace();
+								throw new DatabaseException(s);
 							}
 						}
 					}
-			return users;
+			return false;
 			}
 
 	@Override

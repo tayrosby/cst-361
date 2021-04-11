@@ -12,9 +12,9 @@
 	<div align="center">
 		<h1>Login</h1>
 		<h:form>
-			Email: <h:inputText id = "username" value="#{credentials.email}" title="" /><h:message for = "email"/><br/>
-			Password: <h:inputSecret id = "password" value="#{credentials.password}" title="" /><h:message for="password"/><br/>			
-			<h:commandButton value="Submit" action="#{loginController.login(credentials)}" />
+			Email: <h:inputText id = "email" value="#{userModel.creds.email}" title="" /><h:message for = "email"/><br/>
+			Password: <h:inputSecret id = "password" value="#{userModel.creds.password}" title="" /><h:message for="password"/><br/>			
+			<h:commandButton value="Submit" action="#{loginController.login(userModel)}" />
 			
 		</h:form>
 	</div> 

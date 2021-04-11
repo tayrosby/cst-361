@@ -13,14 +13,14 @@ public interface DataAccessInterface {
 	 * @param creds - user email and user password
 	 * @return
 	 */
-	UserModel findUserByCreds(Credentials creds);
+	boolean findUserByCreds(Credentials creds);
 	
 	/**
 	 * creates a user
 	 * @param user
 	 * @return - user info
 	 */
-	UserModel createUser(UserModel user);
+	boolean createUser(UserModel user);
 	
 	/**
 	 * creates a weather model

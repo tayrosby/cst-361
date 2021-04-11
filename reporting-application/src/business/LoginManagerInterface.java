@@ -10,6 +10,6 @@ public interface LoginManagerInterface {
 	 * @param creds - user email, user password
 	 * @return user info
 	 */
-	UserModel loginUser(Credentials creds);
+	boolean loginUser(UserModel creds);
 
 }

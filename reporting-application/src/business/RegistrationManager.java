@@ -32,8 +32,17 @@ public class RegistrationManager implements RegistrationManagerInterface {
      */
     public boolean register(UserModel user) {
     	
-    	DAO.createUser(user);
-    	
-    	return true;
+    	if(!checkDuplicateUser(user)) {
+    		System.out.println("in if statement creating user");
+    		return DAO.createUser(user);
+    	}
+    	return false;
+    }
+    public boolean checkDuplicateUser(UserModel user) {
+    	if(DAO.findUserByCreds(user.getCreds())) {
+    		System.out.println("in if for check");
+    		return true;
+    	}
+    	return false;
     }
 }

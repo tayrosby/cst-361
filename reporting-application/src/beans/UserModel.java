@@ -2,16 +2,24 @@ package beans;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @ManagedBean
 @ViewScoped
 public class UserModel {
 	
 	//user attributes
+	@NotNull(message = "First name field can't be empty")
+	@Size(min=2, max=50, message = "Please enter an First Name between 2 and 50 characters.")
 	private String firstName;
+	@NotNull(message = "Last name field can't be empty")
+	@Size(min=2, max=50, message = "Please enter an Last Name between 2 and 50 characters.")
 	private String lastName;
 	
 	//user credentials
+
 	private Credentials creds;
 	
 	/**
@@ -58,6 +66,11 @@ public class UserModel {
 
 	public void setCreds(Credentials creds) {
 		this.creds = creds;
+	}
+
+	@Override
+	public String toString() {
+		return "UserModel [firstName=" + firstName + ", lastName=" + lastName + ", creds=" + creds.toString() + "]";
 	}
 	
 	

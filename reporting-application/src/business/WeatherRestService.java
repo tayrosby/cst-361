@@ -20,11 +20,14 @@ import util.DTOFactory;
 import util.LoggingInterceptor;
 
 @Interceptors(LoggingInterceptor.class)
-@ManagedBean
-@ViewScoped
+@RequestScoped
+//@ManagedBean
+//@ViewScoped
 @Path("/weather")
+@Produces({ "application/xml", "application/json" })
+@Consumes({ "application/xml", "application/json" })
 public class WeatherRestService {
-	
+	private ResponseModel response;
 	WeatherManager service = new WeatherManager();
 	//weather rest service constructor
 	public WeatherRestService()
@@ -47,7 +50,7 @@ public class WeatherRestService {
 		
 		System.out.println(weather.toString());
 		result = service.addWeather(weather);
-		ResponseModel response = new ResponseModel();
+		//ResponseModel response = new ResponseModel();
 		if (result == 1) {
 			response = DTOFactory.getDTO(0, "Weather was Added", new WeatherDataModel());
 //			response.setMessage("Weather added"); // if successful, return positive response
@@ -59,11 +62,5 @@ public class WeatherRestService {
 		}
 		return response;
 	}
-	
-	//instance of weather manager
-	WeatherManager manager = new WeatherManager();
-
-
-	
 	
 }

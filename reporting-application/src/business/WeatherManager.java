@@ -26,7 +26,7 @@ import util.LoggingInterceptor;
 public class WeatherManager implements WeatherManagerInterface {
 	
 	@EJB
-	WeatherDataManager service;
+	WeatherDataManager service = new WeatherDataManager();
 	
 	private List<WeatherDataModel> weatherList = new ArrayList<WeatherDataModel>();
 
@@ -64,7 +64,7 @@ public class WeatherManager implements WeatherManagerInterface {
 		series.setLabel("Temp");
 		for(WeatherDataModel weather : data)
 		{
-			series.set(weather.getTemp(), weather.getFeelsLike());
+			series.set(weather.getTemp(), weather.getFeels_like());
 		}
 		
 		model.getModel().addSeries(series);
@@ -82,7 +82,9 @@ public class WeatherManager implements WeatherManagerInterface {
 
 	@Override
 	public int addWeather(WeatherDataModel model) {
+		System.out.println("in the addweather bussiness manager : " + model.toString());
 		int result = service.create(model);
+		System.out.println("leaving business service");
 		return result;
 	}
 }

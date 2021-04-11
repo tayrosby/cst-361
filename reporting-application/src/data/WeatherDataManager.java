@@ -17,6 +17,7 @@ import java.sql.Connection;
 import beans.Credentials;
 import beans.UserModel;
 import beans.WeatherDataModel;
+import util.DatabaseException;
 import util.LoggingInterceptor;
 
 @Interceptors(LoggingInterceptor.class)
@@ -62,12 +63,14 @@ public class WeatherDataManager implements DataAccessInterface{
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new DatabaseException(e);
 		} finally {
 			if(conn != null) {
 				try {
 					conn.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
+					throw new DatabaseException(e);
 				}
 			}
 				
@@ -79,7 +82,7 @@ public class WeatherDataManager implements DataAccessInterface{
 	public int create(WeatherDataModel weather) {
 
 		int result = 0;
-
+		System.out.println("In the create weather data service");
 		
 		Connection conn = null;
 		String url = "jdbc:mysql://localhost:8889/mydb";
@@ -93,7 +96,7 @@ public class WeatherDataManager implements DataAccessInterface{
 			
 			//sql query to add a weatherdata model from the iot device
 			String sql = "INSERT INTO `iot`(`TEMP`, `FEELS_LIKE`, `TEMP_MIN`, `TEMP_MAX`, `PRESSURE`, `HUMIDITY`) VALUES ('" + weather.getTemp() + 
-					"','" + weather.getFeelsLike() + "','" + weather.getMin() + "','" + weather.getMax() + "','" + weather.getPressure() + "','" + weather.getHumidity() + "')"; 
+					"','" + weather.getFeels_like() + "','" + weather.getTemp_min() + "','" + weather.getTemp_max() + "','" + weather.getPressure() + "','" + weather.getHumidity() + "')"; 
 			
 			Statement stmt = conn.createStatement();
 
@@ -102,12 +105,14 @@ public class WeatherDataManager implements DataAccessInterface{
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new DatabaseException(e);
 		} finally {
 			if(conn != null) {
 				try {
 					conn.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
+					throw new DatabaseException(e);
 				}
 			}
 				
@@ -118,15 +123,15 @@ public class WeatherDataManager implements DataAccessInterface{
 	}
 
 	@Override
-	public UserModel findUserByCreds(Credentials creds) {
+	public boolean findUserByCreds(Credentials creds) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
-	public UserModel createUser(UserModel user) {
+	public boolean createUser(UserModel user) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	

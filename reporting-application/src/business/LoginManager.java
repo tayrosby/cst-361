@@ -32,10 +32,15 @@ public class LoginManager implements LoginManagerInterface {
 	 * returns user info
 	 */
 	@Override
-	public UserModel loginUser(Credentials creds) {
-		UserModel user = DAO.findUserByCreds(creds);
-		
-		return user;
+//	public UserModel loginUser(Credentials creds) {
+//		UserModel user = DAO.findUserByCreds(creds);
+//		
+//		return user;
+//	}
+	public boolean loginUser(UserModel user) {
+		if(DAO.findUserByCreds(user.getCreds()))
+			return true;
+		else
+			return false;
 	}
-
 }

@@ -12,11 +12,11 @@
 	<div align="center">
 		<h1>Register</h1>
 		<h:form>
-			Firstname: <h:inputText id = "firstname" value="#{user.fName}" title="" /><h:message for = "firstname"/><br/>
-			Lastname: <h:inputText id = "lastname" value="#{user.lName}" title="" /><h:message for="lastname"/><br/>
-			Email: <h:inputText id = "email" value="#{user.creds.email}" title="" /><h:message for="email"/><br/>
-			Password: <h:inputSecret id = "password" value="#{user.creds.password}" title="" /><h:message for="password"/><br/>			
-			<h:commandButton value="Submit" action="#{registrationController.register(user)}" />
+			Firstname: <h:inputText id = "firstname" value="#{userModel.firstName}" title="" /><h:message for = "firstname"/><br/>
+			Lastname: <h:inputText id = "lastname" value="#{userModel.lastName}" title="" /><h:message for="lastname"/><br/>
+			Email: <h:inputText id = "email" value="#{userModel.creds.email}" title="" /><h:message for="email"/><br/>
+			Password: <h:inputSecret id = "password" value="#{userModel.creds.password}" title="" /><h:message for="password"/><br/>			
+			<h:commandButton value="Submit" action="#{registrationController.register(userModel)}" />
 		</h:form>
 	</div> 
 	<div align="center">

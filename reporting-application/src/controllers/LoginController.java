@@ -28,13 +28,14 @@ public class LoginController implements Serializable {
 	 * @param creds - user email and user password
 	 * @return - Main Page
 	 */
-	public String login(Credentials creds) {
+	public String login(UserModel user) {
 		
-		UserModel user = manager.loginUser(creds);
-		
-		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("user", user);
-		
-		return "MainMenu.xhtml";
+		if(manager.loginUser(user)) {
+			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("user", user);
+			return "MainMenu.xhtml";
+		}
+		return "LoginForm.xhtml";
+
 	}
 	
 	/**

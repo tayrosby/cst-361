@@ -58,7 +58,7 @@ public class UserDataManager implements DataAccessInterface {
 					conn = DriverManager.getConnection(url, username, password);
 				} catch (SQLException s) {
 					s.printStackTrace();
-					throw new DatabaseException(s);
+					throw new DatabaseException("There is an error in the database");
 				}
 				
 				PreparedStatement ps = conn.prepareStatement(sql);
@@ -76,7 +76,7 @@ public class UserDataManager implements DataAccessInterface {
 				
 			} catch (Exception e) {
 				e.printStackTrace();
-				throw new DatabaseException(e);
+				throw new DatabaseException("There is an error in the database");
 			} finally {
 				if(conn != null) {
 					try {
@@ -84,7 +84,7 @@ public class UserDataManager implements DataAccessInterface {
 						return result;
 					} catch (SQLException e) {
 						e.printStackTrace();
-						throw new DatabaseException(e);
+						throw new DatabaseException("There is an error in the database");
 					}
 				}
 					
@@ -115,7 +115,7 @@ public class UserDataManager implements DataAccessInterface {
 					conn = DriverManager.getConnection(url, username, password);
 					} catch (SQLException s) {
 						s.printStackTrace();
-						throw new DatabaseException(s);
+						throw new DatabaseException("There is an error in the database");
 					}
 					PreparedStatement ps = conn.prepareStatement(sql);
 					ps.setObject(1, user.getFirstName());
@@ -126,7 +126,7 @@ public class UserDataManager implements DataAccessInterface {
 					ps.executeUpdate();
 					} catch (Exception e) {
 						e.printStackTrace();
-						throw new DatabaseException(e);
+						throw new DatabaseException("There is an error in the database");
 					} finally {
 						if(conn != null) {
 							try {
@@ -134,7 +134,7 @@ public class UserDataManager implements DataAccessInterface {
 								return true;
 							} catch (SQLException s) {
 								s.printStackTrace();
-								throw new DatabaseException(s);
+								throw new DatabaseException("There is an error in the database");
 							}
 						}
 					}

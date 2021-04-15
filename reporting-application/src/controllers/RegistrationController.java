@@ -28,12 +28,17 @@ public class RegistrationController implements Serializable {
 	 * @return main menu
 	 */
 	public String register(UserModel user) {
-		System.out.println(user.toString());
-		if(manager.register(user)) {
-			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("user", user);
-			return "MainMenu.xhtml";
+		try {
+			System.out.println(user.toString());
+			if(manager.register(user)) {
+				FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("user", user);
+				return "MainMenu.xhtml";
+			}
+			return "RegistrationForm.xhtml";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Exception.xhtml";
 		}
-		return "RegistrationForm.xhtml";
 
 	}
 	

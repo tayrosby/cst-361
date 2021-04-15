@@ -63,14 +63,14 @@ public class WeatherDataManager implements DataAccessInterface{
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DatabaseException(e);
+			throw new DatabaseException("There is an error in the database");
 		} finally {
 			if(conn != null) {
 				try {
 					conn.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					throw new DatabaseException(e);
+					throw new DatabaseException("There is an error in the database");
 				}
 			}
 				
@@ -105,14 +105,14 @@ public class WeatherDataManager implements DataAccessInterface{
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DatabaseException(e);
+			throw new DatabaseException("There is an error in the database");
 		} finally {
 			if(conn != null) {
 				try {
 					conn.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					throw new DatabaseException(e);
+					throw new DatabaseException("There is an error in the database");
 				}
 			}
 				

@@ -30,10 +30,15 @@ public class WeatherController  implements Serializable {
 	 */
 	public String displayTable()
 	{
-		List<WeatherDataModel> list = manager.getAllWeather();
-		
-		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("list", list);
-		return "DataTable.xhtml";
+		try {
+			List<WeatherDataModel> list = manager.getAllWeather();
+			
+			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("list", list);
+			return "DataTable.xhtml";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Exception.xhtml";
+		}
 	}
 	
 	/**
@@ -42,11 +47,16 @@ public class WeatherController  implements Serializable {
 	 */
 	public String displayLineChart()
 	{
-		ChartModel model = new ChartModel();
-		model = manager.getWeatherChart(model);
-		
-		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("chart", model);
-		return "LineChart.xhtml";
+		try {
+			ChartModel model = new ChartModel();
+			model = manager.getWeatherChart(model);
+			
+			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("chart", model);
+			return "LineChart.xhtml";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Exception.xhtml";
+		}
 	}
 
 	/**

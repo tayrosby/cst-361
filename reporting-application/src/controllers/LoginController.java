@@ -30,11 +30,16 @@ public class LoginController implements Serializable {
 	 */
 	public String login(UserModel user) {
 		
-		if(manager.loginUser(user)) {
-			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("user", user);
-			return "MainMenu.xhtml";
+		try {
+			if(manager.loginUser(user)) {
+				FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("user", user);
+				return "MainMenu.xhtml";
+			}
+			return "LoginForm.xhtml";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Exception.xhtml";
 		}
-		return "LoginForm.xhtml";
 
 	}
 	
